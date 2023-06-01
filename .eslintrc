@@ -10,7 +10,6 @@
   ],
   "rules": {
     "eqeqeq": "error",
-    "no-console": "warn",
     "no-undef": "off",
     "no-unused-vars": "off",
     "prettier/prettier": "error",
