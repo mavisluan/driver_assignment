@@ -7,8 +7,11 @@ import * as main from './main';
     program
       .version('1.0.0')
       .option('--command <command>', 'command to run', 'check')
-      .option('--dtPath <destinationsPath>', 'The path to read destinations input files')
-      .option('--drPath <driversPath>', 'The path to read drivers input files')
+      .option(
+        '--dtPath <destinationsPath>',
+        'The path to read destinations input files, required on assign-drivers command'
+      )
+      .option('--drPath <driversPath>', 'The path to read drivers input files, required on assign-drivers command')
       .parse(process.argv);
 
     await main.run(program.opts());
