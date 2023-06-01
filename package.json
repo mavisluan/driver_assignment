@@ -1,0 +1,27 @@
+{
+  "name": "driver_assignment",
+  "version": "1.0.0",
+  "description": "This program runs on the command line to assign drivers to shipment destinations in the optimized way",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch",
+    "start": "node ./build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "driver",
+    "destination",
+    "assignment"
+  ],
+  "author": "yi",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "lodash": "^4.17.21",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "commander": "^10.0.1"
+  }
+}
