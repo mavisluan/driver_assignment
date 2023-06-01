@@ -7,6 +7,8 @@
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -p tsconfig.json --watch",
     "start": "node ./build/index.js",
+    "lint": "eslint --cache \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "eslint --cache --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -18,7 +20,13 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "lodash": "^4.17.21",
+    "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   },
   "dependencies": {
