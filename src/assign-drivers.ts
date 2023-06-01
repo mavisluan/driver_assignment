@@ -64,19 +64,13 @@ const hasCommonFactor = ({
   addressLength,
   driverLength,
 }: Pick<SSElements, 'addressLength' | 'driverLength'>): boolean => {
-  // Calculates the factors of a number without 1 because we don't consider 1 as a common factor in calculating SS
-  const calculateFactorsWithoutOne = (num: number): number[] => {
-    const factors = [];
-    for (let i = 2; i <= num; i++) {
-      if (num % i === 0) factors.push(i);
-    }
-    return factors;
-  };
-
   if (addressLength % driverLength === 0) return true;
 
-  const addressFactors = calculateFactorsWithoutOne(addressLength);
-  const driverFactors = calculateFactorsWithoutOne(driverLength);
+  type FactorsMap = Map<number, number[]>;
+  const factors: FactorsMap = JSON.parse(fs.readFileSync(path.join(__dirname, '../src/data/factors.json'), 'utf8'));
+  const factorsTwoToHundredMap = new Map(factors);
+  const addressFactors = factorsTwoToHundredMap.get(addressLength);
+  const driverFactors = factorsTwoToHundredMap.get(driverLength);
   const hadCommonFactor = _.intersection(addressFactors, driverFactors).length > 0;
   return hadCommonFactor;
 };
