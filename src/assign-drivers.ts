@@ -4,13 +4,23 @@ import _ from 'lodash';
 import { maxWeightAssign } from 'munkres-algorithm';
 
 // Read the new line separated files and create the arrays
-const createDriversAndAddressArrays = (options: { dtPath: string; drPath: string }) => {
+const createDriversAndAddressArrays = async (options: { dtPath: string; drPath: string }) => {
   const { dtPath: destinationsPath, drPath: driversPath } = options;
-  const readFileLines = (filename: string) => fs.readFileSync(filename).toString('utf8').split('\n');
-  const destinations = _.uniq(readFileLines(path.join(__dirname, destinationsPath)));
-  const drivers = _.uniq(readFileLines(path.join(__dirname, driversPath)));
+  const fsPromises = fs.promises;
 
-  return { destinations, drivers };
+  const readFileLinesAsync = async (filename: string) => {
+    const data = await fsPromises.readFile(filename, 'utf8').catch((err) => console.error('Failed to read file', err));
+    if (!data) return [];
+
+    return data.toString().split('\n');
+  };
+
+  const [destinations, drivers] = await Promise.all([
+    readFileLinesAsync(path.join(__dirname, destinationsPath)),
+    readFileLinesAsync(path.join(__dirname, driversPath)),
+  ]);
+
+  return { destinations: _.uniq(destinations), drivers: _.uniq(drivers) };
 };
 
 // This function removes the street number from the address and return street name only
@@ -109,12 +119,12 @@ type MatchingDriversAndDestinationsType = {
   [key: string]: string;
 };
 
-export function assignDrivers(options: { dtPath: string; drPath: string }): void {
+export async function assignDrivers(options: { dtPath: string; drPath: string }): Promise<void> {
   if (!options.dtPath || !options.drPath) {
     throw new Error('dtPath and drPath are required to run assign-drivers command');
   }
 
-  const { destinations, drivers } = createDriversAndAddressArrays(options);
+  const { destinations, drivers } = await createDriversAndAddressArrays(options);
   const SSArray = calculateAllPossibleSSArray(destinations, drivers);
 
   const { assignments: optimalAssignments, assignmentsWeight: totalSS } = maxWeightAssign(SSArray);

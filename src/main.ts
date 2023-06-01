@@ -17,7 +17,7 @@ export async function run(options: Options) {
       console.log('check');
       return;
     case 'assign-drivers':
-      assignDrivers(options);
+      await assignDrivers(options);
       return;
     default:
       fatal(`Unknown command: ${options.command}`);
