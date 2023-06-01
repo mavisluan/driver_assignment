@@ -119,7 +119,12 @@ type MatchingDriversAndDestinationsType = {
   [key: string]: string;
 };
 
-export async function assignDrivers(options: { dtPath: string; drPath: string }): Promise<void> {
+type FinalResultType = {
+  totalSS: number;
+  matchingDriversAndDestinations: MatchingDriversAndDestinationsType;
+};
+
+export async function assignDrivers(options: { dtPath: string; drPath: string }): Promise<FinalResultType> {
   if (!options.dtPath || !options.drPath) {
     throw new Error('dtPath and drPath are required to run assign-drivers command');
   }
@@ -138,4 +143,5 @@ export async function assignDrivers(options: { dtPath: string; drPath: string })
 
   console.log('Total SS: ', totalSS);
   console.log('Matching Drivers and Destinations: ', matchingDriversAndDestinations);
+  return { totalSS, matchingDriversAndDestinations };
 }
