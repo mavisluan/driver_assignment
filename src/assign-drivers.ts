@@ -7,8 +7,8 @@ import { maxWeightAssign } from 'munkres-algorithm';
 const createDriversAndAddressArrays = (options: { dtPath: string; drPath: string }) => {
   const { dtPath: destinationsPath, drPath: driversPath } = options;
   const readFileLines = (filename: string) => fs.readFileSync(filename).toString('utf8').split('\n');
-  const destinations = readFileLines(path.join(__dirname, destinationsPath));
-  const drivers = readFileLines(path.join(__dirname, driversPath));
+  const destinations = _.uniq(readFileLines(path.join(__dirname, destinationsPath)));
+  const drivers = _.uniq(readFileLines(path.join(__dirname, driversPath)));
 
   return { destinations, drivers };
 };
@@ -22,7 +22,6 @@ const removeStreetNumber = (destination: string): string => {
   return streetName;
 };
 
-// Calculate Base SS
 type SSElements = {
   addressLength: number;
   driverLength: number;
@@ -77,12 +76,17 @@ const hasCommonFactor = ({
 
 const calculateSS = (address: string, driver: string): number => {
   const { addressLength, driverLength, driverVowels, driverConsonants } = createCalculateSSElements(address, driver);
+  // cache is used to store the calculated SS for each address length and base SS to
+  // avoid rechecking isCommonFactor and recalculating the SS
+  const cache: { [key: string]: { [key: string]: number } } = {};
 
   const baseSS = calculateBaseSS({ addressLength, driverVowels, driverConsonants });
-  const isCommon = hasCommonFactor({ addressLength, driverLength });
+  if (cache[addressLength] && cache[addressLength][baseSS]) return cache[addressLength][baseSS];
 
-  if (isCommon) return baseSS * 1.5;
-  return baseSS;
+  const isCommon = hasCommonFactor({ addressLength, driverLength });
+  const finalSS = isCommon ? baseSS * 1.5 : baseSS;
+  cache[addressLength] = { [baseSS]: finalSS };
+  return finalSS;
 };
 
 const calculateAllPossibleSSArray = (destinations: string[], drivers: string[]): number[][] => {
@@ -105,7 +109,6 @@ type MatchingDriversAndDestinationsType = {
   [key: string]: string;
 };
 
-// TODO: Add tests and optimize the calculations
 export function assignDrivers(options: { dtPath: string; drPath: string }): void {
   if (!options.dtPath || !options.drPath) {
     throw new Error('dtPath and drPath are required to run assign-drivers command');
