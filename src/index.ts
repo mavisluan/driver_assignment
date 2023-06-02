@@ -6,7 +6,6 @@ import * as main from './main';
   try {
     program
       .version('1.0.0')
-      .option('--command <command>', 'command to run', 'check')
       .option(
         '--dtPath <destinationsPath>',
         'The path to read destinations input files, required on assign-drivers command'

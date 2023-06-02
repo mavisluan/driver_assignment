@@ -12,14 +12,6 @@ export async function run(options: Options) {
   if (!options) {
     fatal('Options are required');
   }
-  switch (options.command) {
-    case 'check':
-      console.log('check');
-      return;
-    case 'assign-drivers':
-      await assignDrivers(options);
-      return;
-    default:
-      fatal(`Unknown command: ${options.command}`);
-  }
+
+  return await assignDrivers(options);
 }

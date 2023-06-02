@@ -5,45 +5,60 @@ Command line tool for assigning drivers to destinations in an optimized way
 ## Solution Diagram
 <img src="./src/assets/solution_diagram.png"/>
 
-## Installation
+## Installation dependencies
 
-    $ npm install -g
+```bash
+# from the root of the app
+npm install -g
+```
 
-## Build and Run Locally
+## Build the application
 
-    $ npm run build
-    $ node build/index.js --help
+```bash
+npm run build
+```
+
+## Run the unit test
+
+```bash
+npm run test
+```
+
+## Run the application
+
+### To check the command line options
+
+```bash
+node build/index.js --help
+
     Usage: index [options]
 
     Options:
     -V, --version                output the version number
     --command <command>          command to run (default: "check")
     -h, --help                   display help for command
+```
 
-## Commands
+### To Assign Drivers
 
-### Check
-    Check if your installation and configuration are done correctly
+The application expects two command line arguments --dtPath AND --drPath.
+Set them up with file paths to the drivers.txt and destinations.txt files.
+The application will output total SS and a matching between shipment destinations and drivers in stdout.
 
-    Run the command below and see 'check' with not error 
-    $ node build/index.js --command=check
+Example of Assign Drivers command:
 
+```bash
+node build/index.js --dtPath '../inputFiles/destinations.txt' --drPath '../inputFiles/drivers.txt' > result.txt
+```
 
-### Assign Drivers
-    Before running the script
-    
-    inputFiles folder
-    Add destinations.txt and drivers.txt file to inputFiles folder 
-    (You can name the files however you want. Just make sure you refer to the right file paths on option --dtPath and --drPath )
+Example output:
 
-    OPTIONS:
-    --dtPath AND --drPath are required on this command
-
-    Output the result in a separate file
-    - By default, the result will be logged out in the console
-    - Run command with > <file.txt> in the end to output the result in the file
-    - The output file can be found in the root folder
-
-    Examples:
-     $ node build/index.js --command assign-drivers  --dtPath '../inputFiles/destinations.txt' --drPath '../inputFiles/drivers.txt' > result.txt
-
+```
+Total SS:  40
+Matching Drivers and Destinations:  {
+  '123 Fake Street, San Diego, CA, 92128': 'Kelly Johnson',
+  '234 Franklin Street, Carborro, NC, 70214': 'John Smith',
+  '345 Main Road, San Jose, CA, 92123': 'Mary  Doe',
+  '456 Jelly Road, San Jose, CA, 94017': 'Cindy Williams'
+}
+```
