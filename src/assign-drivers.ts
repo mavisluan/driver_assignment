@@ -16,8 +16,8 @@ const createDriversAndAddressArrays = async (options: { dtPath: string; drPath: 
   };
 
   const [destinations, drivers] = await Promise.all([
-    readFileLinesAsync(path.join(__dirname, destinationsPath)),
-    readFileLinesAsync(path.join(__dirname, driversPath)),
+    readFileLinesAsync(destinationsPath),
+    readFileLinesAsync(driversPath),
   ]);
 
   return { destinations: _.uniq(destinations), drivers: _.uniq(drivers) };

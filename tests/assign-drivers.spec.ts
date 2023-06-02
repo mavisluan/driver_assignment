@@ -1,8 +1,8 @@
 import { assignDrivers } from '../src/assign-drivers';
 import { expect } from 'chai';
 describe('assignDrivers', () => {
-  const dtPath = '../tests/data/destinations.txt';
-  const drPath = '../tests/data/drivers.txt';
+  const dtPath = 'tests/data/destinations.txt';
+  const drPath = 'tests/data/drivers.txt';
 
   it('should assign drivers to destinations', async () => {
     const { totalSS, matchingDriversAndDestinations } = await assignDrivers({ dtPath, drPath });
