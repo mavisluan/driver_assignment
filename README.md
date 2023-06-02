@@ -3,9 +3,16 @@
 Command line tool for assigning drivers to destinations in an optimized way
 
 ## Solution Diagram
+
+This program uses `munkres-algorithm` package to optimize the assignments, which solves linear assignment problem in O(n^3).
+
 <img src="./src/assets/solution_diagram.png"/>
 
 ## Installation dependencies
+
+Prerequisites:
+Node version: 18
+npm version: 9
 
 ```bash
 # from the root of the app
