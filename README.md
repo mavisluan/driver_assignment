@@ -2,6 +2,9 @@
 
 Command line tool for assigning drivers to destinations in an optimized way
 
+## Solution Diagram
+<img src="./src/assets/solution_diagram.png"/>
+
 ## Installation
 
     $ npm install -g
@@ -43,3 +46,4 @@ Command line tool for assigning drivers to destinations in an optimized way
 
     Examples:
      $ node build/index.js --command assign-drivers  --dtPath '../inputFiles/destinations.txt' --drPath '../inputFiles/drivers.txt' > result.txt
+
